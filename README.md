@@ -1,11 +1,7 @@
-# CXX template
-
-This is a template for projects that use xtensor python with pybind11.
-
-Test with
+# photochemistry
 
 ```
-conda create -n test python numpy pybind11 xtensor xtensor-python cmake
+conda create -n test -c conda-forge python numpy pybind11 xtensor xtensor-python cmake yaml-cpp
 conda activate test
 
 mkdir build

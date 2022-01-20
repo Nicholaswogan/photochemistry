@@ -1,8 +1,8 @@
 from skbuild import setup
 
 setup(
-    name="mypackage",
-    packages=['mypackage'],
+    name="photochemistry",
+    packages=['photochemistry'],
     python_requires='>=3.6',
     version="0.0.1",
     license="MIT",
