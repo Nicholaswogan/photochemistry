@@ -2,9 +2,9 @@
 
 int main(){
   try {
-    read_stuff();
+    Photochem::read_stuff();
   }
-  catch(PhotoException& e){
+  catch(Photochem::PhotoException& e){
     std::cout << e.what() << std::endl;
   }
   
