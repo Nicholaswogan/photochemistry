@@ -1,28 +1,29 @@
-#include "example.h"
-#include "yaml-cpp/yaml.h"
+#include "types.hpp"
+#include "yaml_tools.hpp"
 
-
-double MyClass::sum_arr()
-{  
-  return xt::sum(arr)();  
-}
 
 namespace Photochem {
   
-
-void check_for_keys(YAML::Node n, std::string place, std::vector<std::string> &keys)
+  
+void ReactionBase_t::reaction_rate(const xt::xarray<real> &temp, 
+                                   const xt::xarray<real> &gibbsE, 
+                                   const xt::xarray<real> &density,
+                                   const xt::xarray<real> &densities,
+                                   const xt::xarray<real> *forward_rates,
+                                   xt::xarray<real> &rx_rates)
 {
-  for (int j = 0; j < keys.size(); j++){
-    if (!n[keys[j]]){
-      throw PhotoException(place+" does not contain key \""+keys[j]+"\"");
-    }
-  }
+  throw PhotoException("ReactionBase_t::reaction_rate should never be called.");
 }
-
-void check_for_key(YAML::Node n, std::string place, std::string key)
+  
+void ElementaryReaction_t::reaction_rate(const xt::xarray<real> &temp, 
+                                         const xt::xarray<real> &gibbsE, 
+                                         const xt::xarray<real> &density,
+                                         const xt::xarray<real> &densities,
+                                         const xt::xarray<real> *forward_rates,
+                                         xt::xarray<real> &rx_rates)
 {
-  if (!n[key]){
-    throw PhotoException(place+" does not contain key \""+key+"\"");
+  for (int i = 0; i < temp.size(); i++){
+    rx_rates[i] = A*std::pow(temp[i],b)*exp(-Ea/temp[i]);
   }
 }
   
@@ -47,7 +48,7 @@ void read_stuff()
   
   { // atoms
   
-  check_for_key(file, filename+"/", "atoms");
+  check_for_keys(file, filename+"/", "atoms");
   YAML::Node a = file["atoms"];
   
   std::vector<std::string> keys = {"name", "mass", "redox"};
@@ -65,7 +66,7 @@ void read_stuff()
   
   { // species
   
-  check_for_key(file, filename+"/", "species");
+  check_for_keys(file, filename+"/", "species");
   YAML::Node s = file["species"];
   
   std::vector<std::string> keys = {"name", "composition", "thermo"};

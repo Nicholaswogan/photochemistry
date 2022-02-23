@@ -1,8 +1,8 @@
-#include "example.h"
+#include "photochem.hpp"
 
 int main(){
   try {
-    Photochem::read_stuff();
+    Photochem::Settings s = Photochem::read_settings("../settings_ModernEarth.yaml");
   }
   catch(Photochem::PhotoException& e){
     std::cout << e.what() << std::endl;

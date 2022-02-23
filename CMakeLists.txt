@@ -23,9 +23,7 @@ find_package(xtl REQUIRED)
 find_package(xtensor REQUIRED)
 find_package(yaml-cpp REQUIRED)
 
-add_library(example src/example.cpp)
-target_link_libraries(example PUBLIC xtensor xtensor::optimize ${YAML_CPP_LIBRARIES})
-target_include_directories(example PUBLIC ${YAML_CPP_INCLUDE_DIRS})
+add_subdirectory(src)
 
 add_executable(main test/main.cpp)
 target_link_libraries(main example)
